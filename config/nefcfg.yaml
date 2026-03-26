@@ -16,6 +16,7 @@ configuration:
   serviceList: # the SBI services provided by this NEF
     - serviceName: nnef-pfdmanagement # Nnef_PFDManagement Service
     - serviceName: nnef-oam # OAM service
+    - serviceName: 3gpp-ueid # 3GPP UE Identifier Service
 
 logger: # log output setting
   enable: true # true or false

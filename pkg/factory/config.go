@@ -25,6 +25,7 @@ const (
 	ServiceNefPfd      string = string(models.ServiceName_NNEF_PFDMANAGEMENT)
 	ServiceNefOam      string = "nnef-oam"
 	ServiceNefCallback string = "nnef-callback"
+	ServiceNefUeId     string = "3gpp-ueid"
 )
 
 const (
@@ -47,6 +48,7 @@ const (
 	NefPfdMngResUriPrefix        = "/" + ServiceNefPfd + "/v1"
 	NefOamResUriPrefix           = "/" + ServiceNefOam + "/v1"
 	NefCallbackResUriPrefix      = "/" + ServiceNefCallback + "/v1"
+	NefUeIdResUriPrefix          = "/" + ServiceNefUeId + "/v1"
 )
 
 type Config struct {
@@ -127,9 +129,12 @@ func (c *Configuration) validate() (bool, error) {
 		switch s.ServiceName {
 		case ServiceNefPfd:
 		case ServiceNefOam:
+		case ServiceNefUeId:
+		case ServiceTraffInflu:
+		case ServiceNefCallback:
 		default:
 			err := errors.New("invalid serviceList[" + strconv.Itoa(i) + "]: " +
-				s.ServiceName + ", should be " + ServiceNefPfd + " or " + ServiceNefOam)
+				s.ServiceName)
 			return false, appendInvalid(err)
 		}
 	}
@@ -570,6 +575,8 @@ func (c *Config) ServiceUri(name string) string {
 		return c.SbiUri() + NefOamResUriPrefix
 	case ServiceNefCallback:
 		return c.SbiUri() + NefCallbackResUriPrefix
+	case ServiceNefUeId:
+		return c.SbiUri() + NefUeIdResUriPrefix
 	default:
 		return ""
 	}

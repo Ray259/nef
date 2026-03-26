@@ -7,6 +7,7 @@ import (
 	"github.com/free5gc/openapi/nrf/NFDiscovery"
 	"github.com/free5gc/openapi/nrf/NFManagement"
 	"github.com/free5gc/openapi/pcf/PolicyAuthorization"
+	"github.com/free5gc/openapi/udm/SubscriberDataManagement"
 	"github.com/free5gc/openapi/udr/DataRepository"
 )
 
@@ -21,6 +22,7 @@ type Consumer struct {
 	*nnrfService
 	*npcfService
 	*nudrService
+	*nudmService
 }
 
 func NewConsumer(nef nef) (*Consumer, error) {
@@ -42,6 +44,11 @@ func NewConsumer(nef nef) (*Consumer, error) {
 	c.nudrService = &nudrService{
 		consumer: c,
 		clients:  make(map[string]*DataRepository.APIClient),
+	}
+
+	c.nudmService = &nudmService{
+		consumer: c,
+		clients:  make(map[string]*SubscriberDataManagement.APIClient),
 	}
 	return c, nil
 }
